@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/forumStyles.css">
+    <link rel="stylesheet" href="./css/chatStyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="./js/messageSend.js"></script>
+</head>
+<body>
+    <div class="menuBar">
+        <img src="./asstes/logo.png" class="appLogo" alt="Logo">
+        <div class="navBar">
+            <a class="nav-items" href="./forum.html">Home</a>
+            <a class="nav-items" href="#">About Forum</a>
+            <a class="nav-items" href="#">Contact Devs</a>
+        </div>
+    </div>
+    <div id="chatCont">
+        <div id="chat-box">
+        </div>
+        <div id="inpField">
+            <input type="text" name="chat" id="inptChat">
+            <div id="send" onclick="sendMessage()">
+                <img id="sendClick" src="./asstes/sendLogo.png" alt="send" style="width: 20px;">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+#chatCont {
+    width: 75%;
+    margin: 20px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+#chat-box {
+    height: 78vh;
+    width: 100%;
+    background-color: aliceblue;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+#inpField {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#inptChat {
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 5px;
+    height: auto;
+}
+
+#sendClick {
+    justify-content: center;
+}
+
+#send {
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+}
