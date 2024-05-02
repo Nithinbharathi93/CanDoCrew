@@ -8,7 +8,7 @@
 #chat-box {
     height: 78vh;
     width: 100%;
-    background-color: aliceblue;
+    background-color: rgb(241, 241, 241);
     overflow-y: scroll;
     margin-bottom: 10px;
     border-radius: 15px;
@@ -31,13 +31,139 @@
 
 #sendClick {
     justify-content: center;
+    overflow: hidden;
+    animation: chatMoveOut 2000ms linear normal;
+    animation-play-state: paused;
 }
 
 #send {
-    background-color: aqua;
+    background-color: #7bef7b;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
     border-radius: 50%;
+}
+
+@keyframes chatMoveOut {
+    0% {
+        transform: translateX(0%);
+    }
+    20% {
+        transform: translateX(100%);        
+    }
+    40% {
+        z-index: -11;
+        transform: translateY(-200%);
+    }
+    60% {
+        transform: translateX(-200%);
+    }
+    80% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+
+.chat-container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 6px;
+}
+
+.input-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.msgInpt {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+}
+
+.msgBtn {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #673DE6;
+    color: #fff;
+    cursor: pointer;
+}
+
+.fullContainer {
+    display: block;
+}
+
+.message {
+    background-color: #555;
+    border-radius: 5px;
+    max-width: 100%;
+}
+
+.message span {
+    font-family: 'Courier New', Courier, monospace
+}
+
+.message .sender {
+    padding-left: 3px;
+}
+
+.messageTime {
+    padding: 0 7px ;
+    text-align: end;
+    text-anchor: end;
+    font-size: 60%;
+    margin-bottom: 2%;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 100%;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .login-container {
+    display: block;
+    align-items: center;
+    width: auto;
+    height: max-content;
+  }
+  .login-container #loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  .login-container #loginForm button {
+    margin: 5px 0;
+  }
+  .chat-container {
+    display: flex;
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 }

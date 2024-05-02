@@ -1,7 +1,7 @@
 * {
     font-family: "Signika";
 }
-body {
+body, #chatPage {
     display: flex;
     margin: 0;
     padding: 0;
@@ -87,6 +87,7 @@ body {
     padding: 15px 20px;
     border: #2b2b2b solid 1px;
     position: relative;
+    box-shadow: 5px 5px 5px #000;
 }
 
 #entryPoint:before {
@@ -113,5 +114,7 @@ body {
 #entryPoint:hover {
     transition: all 200ms ease-in-out;
     border: #a3eda3 solid 1px;
-    color: #7bef7b;
+    color: #b8ffb8;
+    box-shadow: 0 0 20px #a3eda3;
 }
+
