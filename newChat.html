@@ -4,25 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chat</title>
-  <link rel="stylesheet" href="styles.css">
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+  <link rel="stylesheet" href="./css/forumStyles.css">
   <style>
-    body {
-    font-family: Arial, sans-serif;
-    font-size: 100%;
-    background-color: #333;
-    color: white;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  * {
+    color: #fff;
   }
-  
   .login-container {
     width: 100%;
+    margin-top: 50%;
     text-align: center;
     background-color: #444;
     padding: 20px;
@@ -32,6 +23,7 @@
   input, #topic {
     padding: 8px;
     margin: 5px;
+    color: #000;
   }
   
   button {
@@ -53,6 +45,9 @@
   
   .chat-container {
     display: flex;
+    margin-top: 25%;
+    align-items: center;
+    justify-content: space-around;
     width: 100%;
     padding: 20px;
     border-radius: 8px;
@@ -152,6 +147,14 @@
   </style>
 </head>
 <body>
+  <div class="menuBar">
+        <img src="./asstes/logo.png" class="appLogo" alt="Logo">
+        <div class="navBar">
+            <a class="nav-items" href="./forum.html">Home</a>
+            <a class="nav-items" href="#">About Forum</a>
+            <a class="nav-items" href="#">Contact Devs</a>
+        </div>
+    </div>
   <div class="container">
     <div id="loginCont" class="login-container">
       <h2>Login</h2>
@@ -159,10 +162,11 @@
         <input type="text" id="username" placeholder="Username" required>
         <!-- <input type="password" id="password" placeholder="Password" required> -->
         <select name="topic" id="topic">
-            <option value="Med">Medical</option>
+            <option value="Med" selected="selected">Medical</option>
             <option value="Edu">Education</option>
             <option value="Cod">Coding</option>
           </select>
+          <input type="hidden" name="selectedTopic" id="selectedTopicValue">
         <button id="loginButton" type="submit">Login</button>
         <p id="loginMessage"></p>
       </form>
@@ -194,11 +198,18 @@ firebase.initializeApp(firebaseConfig);
 // Get a reference to the database service
 var database = firebase.database();
 
+let selectedTopic = '';
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
   const enteredUsername = document.getElementById('username').value;
+  const selectedTopic1 = document.getElementById('topic').value;
+  const selectedTopicInput = document.getElementById('selectedTopicValue');
+  selectedTopicInput.value = selectedTopic1;
+  selectedTopic = selectedTopic1;
+
+// Rest of your form submission logic...
 
   // Verify username and password
 
@@ -213,33 +224,43 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         document.getElementById('messageInput').disabled = false;
         document.querySelector('.msgBtn').disabled = false;
         document.getElementById('username').value = '';
+        document.getElementById('topic').value = '';
+        document.getElementById('selectedTopicValue').velue = '';
         document.getElementById('username').disabled = true;
+        document.getElementById('topic').disabled = true;
+        document.getElementById('selectedTopicValue').disabled = true;
         document.getElementById('loginButton').disabled = true;
+        loginContainer = document.getElementById("loginCont");
+        loginContainer.remove();
         
 
         // // Display previous messages (you might have a function for this)
-        displayPreviousMessages();
-        loginContainer = document.getElementById("loginCont");
-        loginContainer.remove();
-});
+        displayPreviousMessages(selectedTopic);
+      });
+      
+      async function getTopic() {
+          return selectedTopic;  // Return the retrieved value
+        }
+
 
 let messageListener = null;
-function displayPreviousMessages() {
- 
+function displayPreviousMessages(selectedTopic) {
   if (messageListener !== null) {
-    database.ref('data').off('child_added', messageListener);
+    database.ref(`data/`).off('child_added', messageListener);
   }
- 
-  // Add new listener
+
   messageListener = function(snapshot) {
     var childData = snapshot.val();
+    // Process the retrieved data here (e.g., display messages)
     displayMessage(childData.username, childData.message, childData.timestamp);
   };
-  database.ref('data').on('child_added', messageListener);
- }
- 
- function displayMessage(username, message, timestamp) {
 
+  database.ref(`data/`).on('child_added', messageListener);
+  console.log(getTopic());
+}
+
+
+ function displayMessage(username, message, timestamp) {
    var parts = timestamp.split(" ");
    var timeSent = parts[4]; // The time is the fifth element in the array
 
@@ -258,30 +279,30 @@ function displayPreviousMessages() {
 
 function sendMessage() {
   const messageInput = document.getElementById('messageInput');
-  const message = messageInput.value.trim();
- 
+  const message = messageInput.value.trim(); 
+
   if (message && username) {
     const chatBox = document.querySelector('.chat-box');
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
- 
+
     const timestamp = new Date().toLocaleString(); // Get current timestamp
     const dataToWrite = `${username},${message},${timestamp}\n`; // Data to write to CSV
- 
-    // messageElement.innerHTML = `<span class="sender">${username}:</span> <span class="message-text">${message}</span>`;
-    chatBox.appendChild(messageElement); 
 
-    
-    // Write new data to the database
+    // Update the database reference to include the selected topic
     database.ref(`data/${username}${Date.now()}`).set({
       username: username,
       message: message,
       timestamp: Date().toString()
     });
 
-  document.getElementById('messageInput').value = '';
+    // messageElement.innerHTML = `<span class="sender">${username}:</span> <span class="message-text">${message}</span>`;
+    chatBox.appendChild(messageElement);
+
+    document.getElementById('messageInput').value = '';
   }
- }
+}
+
  
   </script>
 </body>

@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+ </script>
+</head>
+<body>
+  <input type="text" placeholder="Prompt" id="prompt">
+  <button id="subm">Enter</button>
+  <script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyDy9Oxs1h-c4DsHVzbz_44CY4rjqNsndy0";
+
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    // For text-only input, use the gemini-pro model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+    document.getElementById("subm").addEventListener('click', async function () {
+  const prompt = document.getElementById("prompt").value;
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  const text = response.text();
+  document.getElementById("prompt").value = '';
+  console.log(text);
+});
+
+ </script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -35,4 +75,4 @@
     </div>
     <script src="script.js"></script>
   </body>
-</html>
+</html> -->
